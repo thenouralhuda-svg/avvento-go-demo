@@ -1,6 +1,413 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
+  ```html
+<style>
+/* =========================================================
+   AVVENTO GO — ONBOARDING OVERLAY
+   ========================================================= */
+
+#avventoOnboarding {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(111, 60, 255, .28), transparent 32%),
+    radial-gradient(circle at 10% 90%, rgba(255, 122, 24, .12), transparent 28%),
+    #090712;
+  color: #fff;
+  font-family: Arial, "Noto Sans Arabic", "Segoe UI", sans-serif;
+  direction: rtl;
+  overflow: hidden;
+  transition: opacity .55s ease, visibility .55s ease;
+}
+
+#avventoOnboarding.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.av-onboard-bg {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+.av-purple-orb {
+  width: 420px;
+  height: 420px;
+  background: #5425e8;
+  top: -150px;
+  right: -100px;
+  opacity: .25;
+}
+
+.av-orange-orb {
+  width: 360px;
+  height: 360px;
+  background: #ff6418;
+  bottom: -170px;
+  left: -100px;
+  opacity: .11;
+}
+
+.av-onboard-container {
+  width: min(1180px, 100%);
+  height: 100%;
+  margin: auto;
+  padding: 30px 34px 24px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+}
+
+.av-onboard-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.av-onboard-logo {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: .6px;
+}
+
+.av-onboard-logo span {
+  color: #ff7a18;
+}
+
+.av-skip {
+  background: transparent;
+  border: none;
+  color: #aaa2b9;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.av-slide {
+  flex: 1;
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 70px;
+  direction: ltr;
+  animation: avFadeIn .45s ease;
+}
+
+.av-slide.active {
+  display: grid;
+}
+
+@keyframes avFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.av-copy {
+  direction: rtl;
+  max-width: 540px;
+}
+
+.av-eyebrow {
+  color: #bca4ff;
+  font-size: 13px;
+  margin-bottom: 17px;
+  letter-spacing: .8px;
+}
+
+.av-copy h1 {
+  font-size: clamp(42px, 5.4vw, 70px);
+  line-height: 1.08;
+  margin: 0 0 22px;
+}
+
+.av-copy h2 {
+  font-size: clamp(34px, 4.2vw, 52px);
+  line-height: 1.15;
+  margin: 0 0 20px;
+}
+
+.av-lead {
+  color: #aaa2b9;
+  font-size: 18px;
+  line-height: 1.95;
+  margin: 0 0 30px;
+}
+
+.av-primary-btn {
+  border: none;
+  border-radius: 15px;
+  padding: 15px 27px;
+  color: white;
+  font-weight: 700;
+  font-size: 15px;
+  background: linear-gradient(135deg, #8c63ff, #6f3cff);
+  box-shadow: 0 15px 40px rgba(111,60,255,.25);
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.av-primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 50px rgba(111,60,255,.35);
+}
+
+/* =========================
+   LOGISTICS VISUAL
+   ========================= */
+
+.av-visual {
+  direction: ltr;
+  min-height: 430px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.av-route {
+  width: min(510px, 100%);
+  height: 340px;
+  position: relative;
+}
+
+.av-route svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.av-route-node {
+  position: absolute;
+  width: 78px;
+  height: 78px;
+  border-radius: 23px;
+  display: grid;
+  place-items: center;
+  font-size: 31px;
+  background: rgba(255,255,255,.065);
+  border: 1px solid rgba(255,255,255,.14);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 25px 70px rgba(0,0,0,.3);
+}
+
+.av-air {
+  top: 30px;
+  left: 15px;
+}
+
+.av-sea {
+  top: 160px;
+  left: 215px;
+}
+
+.av-land {
+  top: 28px;
+  right: 5px;
+}
+
+.av-route-label {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  padding: 11px 19px;
+  border-radius: 30px;
+  color: #ddd8e5;
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.09);
+  backdrop-filter: blur(15px);
+  font-size: 13px;
+}
+
+/* =========================
+   WHY AVVENTO
+   ========================= */
+
+.av-benefits {
+  width: min(510px, 100%);
+  display: grid;
+  gap: 14px;
+}
+
+.av-benefit {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 19px;
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.09);
+  backdrop-filter: blur(14px);
+}
+
+.av-benefit-icon {
+  width: 46px;
+  height: 46px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: rgba(111,60,255,.15);
+  font-size: 21px;
+}
+
+.av-benefit strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.av-benefit p {
+  color: #aaa2b9;
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* =========================
+   HOW IT WORKS
+   ========================= */
+
+.av-steps {
+  width: min(510px, 100%);
+  display: grid;
+  gap: 15px;
+}
+
+.av-step {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.09);
+}
+
+.av-step-number {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #6f3cff;
+  font-weight: 800;
+}
+
+.av-step strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.av-step span {
+  color: #aaa2b9;
+  font-size: 14px;
+}
+
+/* =========================
+   BOTTOM
+   ========================= */
+
+.av-onboard-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.av-dots {
+  direction: ltr;
+  display: flex;
+  gap: 7px;
+}
+
+.av-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 10px;
+  background: #494253;
+  transition: all .25s ease;
+}
+
+.av-dot.active {
+  width: 28px;
+  background: #ff7a18;
+}
+
+.av-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.av-back {
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 15px;
+  padding: 14px 23px;
+  background: transparent;
+  color: #ddd8e4;
+  cursor: pointer;
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 800px) {
+
+  .av-onboard-container {
+    padding: 24px 20px;
+  }
+
+  .av-slide {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 20px 0;
+  }
+
+  .av-visual {
+    order: -1;
+    min-height: 245px;
+  }
+
+  .av-route {
+    transform: scale(.75);
+  }
+
+  .av-copy {
+    max-width: none;
+  }
+
+  .av-lead {
+    font-size: 16px;
+  }
+
+  .av-onboard-bottom {
+    padding-top: 15px;
+  }
+
+  .av-copy h1 {
+    font-size: 42px;
+  }
+
+  .av-copy h2 {
+    font-size: 34px;
+  }
+}
+</style>
+```
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b0825">
@@ -137,6 +544,381 @@
   </style>
 </head>
 <body>
+  ```html
+<!-- =========================================================
+     AVVENTO GO — ONBOARDING
+     This sits ON TOP of the original Avvento Go app.
+     ========================================================= -->
+
+<div id="avventoOnboarding">
+
+  <div class="av-onboard-bg av-purple-orb"></div>
+  <div class="av-onboard-bg av-orange-orb"></div>
+
+  <div class="av-onboard-container">
+
+    <!-- TOP -->
+
+    <div class="av-onboard-top">
+
+      <div class="av-onboard-logo">
+        AVVENTO <span>GO</span>
+      </div>
+
+      <button
+        class="av-skip"
+        onclick="avventoFinishOnboarding()"
+      >
+        تخطي
+      </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         SLIDE 1 — WELCOME
+         ===================================================== -->
+
+    <div class="av-slide active" data-slide="1">
+
+      <div class="av-copy">
+
+        <div class="av-eyebrow">
+          حلول شحن للأعمال
+        </div>
+
+        <h1>
+          من أي مكان،<br>
+          إلى أي مكان.
+        </h1>
+
+        <p class="av-lead">
+          شحن جوي وبحري وبري، مصمم ليجعل نقل بضائعك
+          أبسط وأكثر وضوحاً.
+        </p>
+
+        <button
+          class="av-primary-btn"
+          onclick="avventoNextSlide()"
+        >
+          اكتشف Avvento Go
+        </button>
+
+      </div>
+
+
+      <div class="av-visual">
+
+        <div class="av-route">
+
+          <svg viewBox="0 0 500 340" fill="none">
+
+            <defs>
+
+              <linearGradient
+                id="avventoRouteGradient"
+                x1="0"
+                y1="0"
+                x2="1"
+                y2="0"
+              >
+
+                <stop
+                  offset="0%"
+                  stop-color="#ff7a18"
+                />
+
+                <stop
+                  offset="100%"
+                  stop-color="#8c63ff"
+                />
+
+              </linearGradient>
+
+            </defs>
+
+            <path
+              d="M55 70
+                 C145 90 155 190 245 192
+                 C335 194 365 55 445 65"
+              stroke="url(#avventoRouteGradient)"
+              stroke-width="2"
+              stroke-dasharray="7 8"
+            />
+
+          </svg>
+
+
+          <div class="av-route-node av-air">
+            ✈️
+          </div>
+
+          <div class="av-route-node av-sea">
+            🚢
+          </div>
+
+          <div class="av-route-node av-land">
+            🚚
+          </div>
+
+
+          <div class="av-route-label">
+            أينما تريد • بالطريقة التي تناسبك
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SLIDE 2 — WHY AVVENTO
+         ===================================================== -->
+
+    <div class="av-slide" data-slide="2">
+
+      <div class="av-copy">
+
+        <div class="av-eyebrow">
+          لماذا Avvento Go؟
+        </div>
+
+        <h2>
+          شحنك تحت السيطرة.
+        </h2>
+
+        <p class="av-lead">
+          لأن إدارة شحنتك لا يجب أن تكون معقدة.
+          نضع أهم ما تحتاجه أمامك، من أول خطوة حتى الوصول.
+        </p>
+
+      </div>
+
+
+      <div class="av-visual">
+
+        <div class="av-benefits">
+
+
+          <div class="av-benefit">
+
+            <div class="av-benefit-icon">
+              📍
+            </div>
+
+            <div>
+
+              <strong>
+                وضوح في كل خطوة
+              </strong>
+
+              <p>
+                تابع شحناتك واعرف أين وصلت في أي وقت.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="av-benefit">
+
+            <div class="av-benefit-icon">
+              💰
+            </div>
+
+            <div>
+
+              <strong>
+                تكلفة واضحة
+              </strong>
+
+              <p>
+                احصل على تقدير واضح لتكلفة شحنتك
+                قبل اتخاذ القرار.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="av-benefit">
+
+            <div class="av-benefit-icon">
+              ⏱️
+            </div>
+
+            <div>
+
+              <strong>
+                وقتك أهم
+              </strong>
+
+              <p>
+                حلول شحن متعددة تساعدك على اختيار
+                ما يناسب أعمالك.
+              </p>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SLIDE 3 — HOW IT WORKS
+         ===================================================== -->
+
+    <div class="av-slide" data-slide="3">
+
+      <div class="av-copy">
+
+        <div class="av-eyebrow">
+          ببساطة
+        </div>
+
+        <h2>
+          كيف يعمل Avvento Go؟
+        </h2>
+
+        <p class="av-lead">
+          ثلاث خطوات بسيطة، وتبقى شحنتك تحت عينك.
+        </p>
+
+        <button
+          class="av-primary-btn"
+          onclick="avventoFinishOnboarding()"
+        >
+          ابدأ الآن
+        </button>
+
+      </div>
+
+
+      <div class="av-visual">
+
+        <div class="av-steps">
+
+
+          <div class="av-step">
+
+            <div class="av-step-number">
+              ١
+            </div>
+
+            <div>
+
+              <strong>
+                أنشئ شحنتك
+              </strong>
+
+              <span>
+                أدخل تفاصيل الشحنة واحتياجاتك.
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="av-step">
+
+            <div class="av-step-number">
+              ٢
+            </div>
+
+            <div>
+
+              <strong>
+                تابعها
+              </strong>
+
+              <span>
+                ابقَ على اطلاع بموقع شحنتك وحالتها.
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="av-step">
+
+            <div class="av-step-number">
+              ٣
+            </div>
+
+            <div>
+
+              <strong>
+                استلمها
+              </strong>
+
+              <span>
+                نوصلك إلى آخر خطوة.
+              </span>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- BOTTOM -->
+
+    <div class="av-onboard-bottom">
+
+      <div class="av-dots">
+
+        <i class="av-dot active"></i>
+        <i class="av-dot"></i>
+        <i class="av-dot"></i>
+
+      </div>
+
+
+      <div class="av-actions">
+
+        <button
+          class="av-back"
+          id="avventoBack"
+          onclick="avventoPreviousSlide()"
+          style="display:none;"
+        >
+          رجوع
+        </button>
+
+        <button
+          class="av-primary-btn"
+          id="avventoNext"
+          onclick="avventoNextSlide()"
+        >
+          التالي
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+```
   <div class="site">
     <header class="topbar">
       <div class="brand"><img class="brand-logo" src="./avvento-go-wordmark.png" alt="avvento GO"></div>
@@ -188,5 +970,136 @@
     function closeNotices(){document.getElementById('notice-box')?.remove();}
     go('home');
   </script>
+  ```html
+<script>
+/* =========================================================
+   AVVENTO GO — ONBOARDING CONTROLLER
+   ========================================================= */
+
+(function () {
+
+  let avventoCurrentSlide = 1;
+
+  const onboarding =
+    document.getElementById("avventoOnboarding");
+
+  const slides =
+    document.querySelectorAll(".av-slide");
+
+  const dots =
+    document.querySelectorAll(".av-dot");
+
+  const nextButton =
+    document.getElementById("avventoNext");
+
+  const backButton =
+    document.getElementById("avventoBack");
+
+
+  function updateOnboarding() {
+
+    slides.forEach(function (slide) {
+
+      const number =
+        Number(slide.dataset.slide);
+
+      slide.classList.toggle(
+        "active",
+        number === avventoCurrentSlide
+      );
+
+    });
+
+
+    dots.forEach(function (dot, index) {
+
+      dot.classList.toggle(
+        "active",
+        index === avventoCurrentSlide - 1
+      );
+
+    });
+
+
+    /* Back button */
+
+    if (avventoCurrentSlide === 1) {
+
+      backButton.style.display = "none";
+
+    } else {
+
+      backButton.style.display = "block";
+
+    }
+
+
+    /* Next button */
+
+    if (avventoCurrentSlide === 3) {
+
+      nextButton.style.display = "none";
+
+    } else {
+
+      nextButton.style.display = "block";
+      nextButton.textContent = "التالي";
+
+    }
+
+  }
+
+
+  window.avventoNextSlide = function () {
+
+    if (avventoCurrentSlide < 3) {
+
+      avventoCurrentSlide++;
+
+      updateOnboarding();
+
+    }
+
+  };
+
+
+  window.avventoPreviousSlide = function () {
+
+    if (avventoCurrentSlide > 1) {
+
+      avventoCurrentSlide--;
+
+      updateOnboarding();
+
+    }
+
+  };
+
+
+  window.avventoFinishOnboarding = function () {
+
+    onboarding.classList.add("hidden");
+
+    /*
+      Keep the original Avvento Go app underneath.
+      Nothing from the original app is removed.
+    */
+
+    document.body.style.overflow = "";
+
+  };
+
+
+  /*
+    Start with onboarding visible.
+  */
+
+  document.body.style.overflow = "hidden";
+
+  updateOnboarding();
+
+})();
+</script>
+```
 </body>
 </html>
